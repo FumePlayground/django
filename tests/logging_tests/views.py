@@ -1,4 +1,5 @@
 from django.core.exceptions import DisallowedHost, PermissionDenied, SuspiciousOperation
+from django.core.files.storage import FileSystemStorage
 from django.http import (
     Http404,
     HttpResponse,
@@ -6,6 +7,17 @@ from django.http import (
     HttpResponseServerError,
 )
 from django.http.multipartparser import MultiPartParserError
+from django.shortcuts import render
+
+def image_upload(request):
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        filename = fs.save(uploaded_file.name, uploaded_file)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'image_upload.html', {'uploaded_file_url': uploaded_file_url})
+
+    return render(request, 'image_upload.html')
 
 
 def innocent(request):
