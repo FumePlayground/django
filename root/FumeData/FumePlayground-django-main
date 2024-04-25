@@ -1,0 +1,25 @@
+
+import subprocess
+import os
+
+def create_django_app(app_name, project_directory):
+    # Change to the specified project directory
+    os.chdir(project_directory)
+
+    # Command to start a new Django app
+    command = f"python manage.py startapp {app_name}"
+
+    # Execute the command
+    process = subprocess.run(command, shell=True, text=True, capture_output=True)
+    
+    # Check if the command was executed successfully
+    if process.returncode == 0:
+        print(f"'{app_name}' app created successfully in '{project_directory}'.")
+    else:
+        print(f"Failed to create '{app_name}' app. Error: {process.stderr}")
+
+# Example usage:
+# Assuming the current script is not in the Django project directory,
+# provide the absolute path where the Django project is located.
+django_project_directory = "/root/FumeData/7eb36f2f-a32f-4256-a2f7-67e22ac34d51/root/FumeData/FumePlayground-django-main"
+create_django_app("calculator", django_project_directory)
