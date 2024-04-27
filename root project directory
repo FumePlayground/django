@@ -1,0 +1,35 @@
+
+import subprocess
+import sys
+
+def check_and_install_django():
+    """Check if Django is installed and install it if it's not present."""
+    try:
+        import django
+        print("Django is already installed.")
+    except ImportError:
+        print("Django not found, installing...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "django"])
+        print("Django installed successfully.")
+
+def create_django_project_and_app():
+    """Create a new Django project and a new app within that project."""
+    project_name = "language_learning_app"
+    app_name = "accounts"
+    
+    # Step 1: Create the Django project
+    subprocess.call(["django-admin", "startproject", project_name])
+    print(f"Project '{project_name}' created successfully.")
+    
+    # Step 2: Change to the project directory
+    import os
+    os.chdir(project_name)
+    
+    # Step 3: Start the Django app
+    subprocess.call(["python", "manage.py", "startapp", app_name])
+    print(f"App '{app_name}' created successfully in project '{project_name}'.")
+
+# Execution of the setup process
+if __name__ == "__main__":
+    check_and_install_django()
+    create_django_project_and_app()
